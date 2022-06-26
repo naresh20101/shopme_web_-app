@@ -43,5 +43,40 @@ public class UserRepositoryTests {
 		
 		
 	}
+	@Test
+	public void testListOfUsers() {
+		Iterable<User> listUsers=userRepository.findAll();
+		listUsers.forEach(user->System.out.println(user));
+	}
+	
+	@Test
+	public void testGetUserById() {
+		User userName=userRepository.findById(1).get();
+		System.out.println(userName);
+		assertThat(userName).isNotNull();
+	}
+	@Test
+	public void testUpdateUserDetails() {
+		User userName=userRepository.findById().get();
+		userName.setEnabled(true);
+		userName.setEmail("khatrinaresh@gmail.com");
+		userRepository.save(userName);
+	}
+	@Test
+	public void testUpdateUserRoles() {
+		User userGovinda=userRepository.findById(3).get();
+		Role roleEditor=new Role(5);
+		Role saleperson=new Role(4);
+		userGovinda.getRoles().remove(roleEditor);
+		userGovinda.addRole(saleperson);
+		userRepository.save(userGovinda);
+		
+		
+	}
+	@Test
+	public void deleteUser() {
+		Integer userId=10;
+		userRepository.deleteById(userId);
+	}
 
 }
