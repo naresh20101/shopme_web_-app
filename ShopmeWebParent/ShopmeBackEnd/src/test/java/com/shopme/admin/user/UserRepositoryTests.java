@@ -57,7 +57,7 @@ public class UserRepositoryTests {
 	}
 	@Test
 	public void testUpdateUserDetails() {
-		User userName=userRepository.findById().get();
+		User userName=userRepository.findById(1).get();
 		userName.setEnabled(true);
 		userName.setEmail("khatrinaresh@gmail.com");
 		userRepository.save(userName);
