@@ -33,5 +33,8 @@ public class UserService {
 		user.setPassword(endcodePassword);
 	}
 	
-
+	public boolean isEmailUnique(String email) {
+		User user=userRepository.getUserByEmail(email);
+		return user==null;
+	}
 }
