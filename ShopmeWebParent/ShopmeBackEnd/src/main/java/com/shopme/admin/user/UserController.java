@@ -43,8 +43,6 @@ public class UserController {
 		return"redirect:/users";
 		
 	}
-	public String checkDuplicateEmail(@Param("email") String email) {
-		return userService.isEmailUnique(email) ? "OK": "Duplicate";
-	}
+
 
 }
