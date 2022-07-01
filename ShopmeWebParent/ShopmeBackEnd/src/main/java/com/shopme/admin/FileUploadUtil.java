@@ -26,5 +26,25 @@ public class FileUploadUtil {
 		}
 		
 	}
+	public static void cleanDir(String dir) {
+		Path dirPath=Paths.get(dir);
+		try {
+			Files.list(dirPath).forEach(file->{
+				if(!Files.isDirectory(file)) {
+					try {
+						Files.delete(file);
+					}
+					catch (IOException e) {
+						// TODO: handle exception
+						System.out.println("could not delete:"+file);
+					}
+				}
+			});
+		}
+		catch (IOException e) {
+			// TODO: handle exception
+			System.out.println("could not list directory:"+ dirPath);
+		}
+	}
 
 }
