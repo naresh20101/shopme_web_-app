@@ -6,6 +6,9 @@ import java.util.NoSuchElementException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +18,7 @@ import com.shopme.common.entity.User;
 @Service
 @Transactional
 public class UserService {
+	public static final int pageSize=4;
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
@@ -23,6 +27,10 @@ public class UserService {
 	private PasswordEncoder passwordEncoder;
 	public List<User> listAll(){
 		return (List<User>) userRepository.findAll();
+	}
+	public Page<User> listByPage(int pageNum){
+		Pageable pegeable=PageRequest.of(pageNum-1, pageSize);
+		return userRepository.findAll(pegeable);
 	}
 	public List<Role> listRoles(){
 		return (List<Role>) roleRepository.findAll();
