@@ -25,10 +25,10 @@ public class User {
 	private String email;
 	@Column(length = 128, nullable = false)
 	private String password;
-	@Column(length = 45,nullable = false)
-	private String first_name;
-	@Column(length = 45, nullable = false)
-	private String last_name;
+	@Column( name="first_name" ,length = 45,nullable = false)
+	private String firstName;
+	@Column(name="last_name", length = 45, nullable = false)
+	private String lastName;
 	@Column(length = 64)
 	private String photos;
 	private boolean enabled;
@@ -43,12 +43,12 @@ public class User {
 	public User() {
 		
 	}
-	public User(String email, String password, String first_name, String last_name) {
-		
+	public User(String email, String password, String firstName, String lastName) {
+	
 		this.email = email;
 		this.password = password;
-		this.first_name = first_name;
-		this.last_name = last_name;
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
 	public Set<Role> getRoles() {
 		return roles;
@@ -74,17 +74,18 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getFirst_name() {
-		return first_name;
+	
+	public String getFirstName() {
+		return firstName;
 	}
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
-	public String getLast_name() {
-		return last_name;
+	public String getLastName() {
+		return lastName;
 	}
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 	public String getPhotos() {
 		return photos;
@@ -104,7 +105,7 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", first_name=" + first_name + ", last_name=" + last_name
+		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", roles=" + roles + "]";
 	}
 	@Transient
