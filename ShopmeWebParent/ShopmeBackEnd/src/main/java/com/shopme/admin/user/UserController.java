@@ -89,8 +89,9 @@ public class UserController {
 			userService.save(user);
 		}
 	//	userService.save(user);
+		String firstPartOfEMail=user.getEmail().split("@")[0];
 	    redirectAttributes.addFlashAttribute("message","The user have been saved sucessfully");
-		return"redirect:/users";
+		return"redirect:/users/page/1?sortField=id&sortDir=asc&keyword="+firstPartOfEMail;
 		
 	}
 	
