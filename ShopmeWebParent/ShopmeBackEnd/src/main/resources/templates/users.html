@@ -84,16 +84,28 @@
  
  </div>
  <div>
+ <form th:action="@{/users/page/1}" class="form-inline m-3">
+ <input type="hidden" name="sortField" th:value="${sortField}">
+ <input type="hidden" name="sortDir" th:value="${sortDir}">
+ Filter:&nbsp;
+ <input type="search" name="keyword" th:value="${keyword}" class="form-control" required/>
+ &nbsp; &nbsp;
+ <input type="submit" value="Search" class="btn btn-primary"/>
+ &nbsp; &nbsp;
+ <input type="button" value="Clear" class="btn btn-secondary" onclick="clearFilter()"/>
+ </form>
+ </div>
+ <div>
   <table class="table table-bordered table-striped table-hover table-responsive-xl">
   <thead class="thead-dark">
   <tr>
    <th>
    <a th:if="${sortField != 'id'}" class="text-white"
-      th:href="@{'/users/page/'+${currentPage}+'?sortField=id&sortDir='+${sortDir}}">
+      th:href="@{'/users/page/'+${currentPage}+'?sortField=id&sortDir='+${sortDir}+ ${keyword!=null ? '&keyword='+ keyword:''}}">
      User ID
       </a>
       <a  th:if="${sortField == 'id'}" class="text-white"
-      th:href="@{'/users/page/'+${currentPage}+'?sortField=id&sortDir='+${reverseSortOrder}}">
+      th:href="@{'/users/page/'+${currentPage}+'?sortField=id&sortDir='+${reverseSortOrder}+ ${keyword!=null ? '&keyword='+ keyword:''}}">
       User ID
       </a>
      <span th:if="${sortField == 'id'}" th:class="${sortDir=='asc'? 'fas fa-sort-up':'fas fa-sort-down'}"></span>
@@ -101,22 +113,22 @@
     <th>Photo</th>
     <th>
      <a th:if="${sortField != 'email'}" class="text-white"
-      th:href="@{'/users/page/'+${currentPage}+'?sortField=email&sortDir='+${sortDir}}">
+      th:href="@{'/users/page/'+${currentPage}+'?sortField=email&sortDir='+${sortDir}+ ${keyword!=null ? '&keyword='+ keyword:''}}">
       Email
       </a>
       <a  th:if="${sortField == 'email'}" class="text-white"
-      th:href="@{'/users/page/'+${currentPage}+'?sortField=email&sortDir='+${reverseSortOrder}}">
+      th:href="@{'/users/page/'+${currentPage}+'?sortField=email&sortDir='+${reverseSortOrder}+ ${keyword!=null ? '&keyword='+ keyword:''}}">
       Email
       </a>
      <span th:if="${sortField == 'email'}" th:class="${sortDir=='asc'? 'fas fa-sort-up':'fas fa-sort-down'}"></span>
      </th>
     <th>
      <a th:if="${sortField != 'firstName'}" class="text-white"
-      th:href="@{'/users/page/'+${currentPage}+'?sortField=firstName&sortDir='+${sortDir}}">
+      th:href="@{'/users/page/'+${currentPage}+'?sortField=firstName&sortDir='+${sortDir}+ ${keyword!=null ? '&keyword='+ keyword:''}}">
        First Name
       </a>
       <a  th:if="${sortField == 'firstName'}" class="text-white"
-      th:href="@{'/users/page/'+${currentPage}+'?sortField=firstName&sortDir='+${reverseSortOrder}}">
+      th:href="@{'/users/page/'+${currentPage}+'?sortField=firstName&sortDir='+${reverseSortOrder}+ ${keyword!=null ? '&keyword='+ keyword:''}}">
       First Name
       </a>
      <span th:if="${sortField == 'firstName'}" th:class="${sortDir=='asc'? 'fas fa-sort-up':'fas fa-sort-down'}"></span>
@@ -124,11 +136,11 @@
     </th>
     <th> 
      <a th:if="${sortField != 'lastName'}" class="text-white"
-      th:href="@{'/users/page/'+${currentPage}+'?sortField=lastName&sortDir='+${sortDir}}">
+      th:href="@{'/users/page/'+${currentPage}+'?sortField=lastName&sortDir='+${sortDir}+ ${keyword!=null ? '&keyword='+ keyword:''}}">
        Last Name
       </a>
       <a  th:if="${sortField == 'lastName'}" class="text-white"
-      th:href="@{'/users/page/'+${currentPage}+'?sortField=lastName&sortDir='+${reverseSortOrder}}">
+      th:href="@{'/users/page/'+${currentPage}+'?sortField=lastName&sortDir='+${reverseSortOrder}+ ${keyword!=null ? '&keyword='+ keyword:''}}">
       Last Name
       </a>
      <span th:if="${sortField == 'lastName'}" th:class="${sortDir=='asc'? 'fas fa-sort-up':'fas fa-sort-down'}"></span>
@@ -170,7 +182,7 @@
   <div class="text-center m-1" th:unless="${totalItems>0}">
   <span>No User Found !!!</span>
  </div>
- <div>
+ <div th:if="${totalPages > 1}">
  <nav>
   <ul class="pagination justify-content-center">
    <li th:class="${currentPage > 1 ? 'page-item':'page-item disabled'}">
@@ -218,6 +230,11 @@ $(document).ready(function(e){
 	});
 	
 });
+function clearFilter(){
+	window.location="/ShopmeAdmin/users";
+	
+	
+}
 </script>
 </body>
 </html>
