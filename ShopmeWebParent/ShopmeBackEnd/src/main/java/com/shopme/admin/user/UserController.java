@@ -149,6 +149,13 @@ public class UserController {
 		UserCSVExporter exporter=new UserCSVExporter();
 		exporter.export(listUsers, httpServletResponse);
 	}
+	@GetMapping("/users/export/excel")
+	public void  exportToExcel(HttpServletResponse httpServletResponse) throws IOException {
+		List<User> listUsers=userService.listAll();
+		
+		UserExcelExporter exporter=new UserExcelExporter();
+		exporter.export(listUsers, httpServletResponse);
+	}
 	
 
 

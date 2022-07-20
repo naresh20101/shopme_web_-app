@@ -14,15 +14,9 @@ import org.supercsv.prefs.CsvPreference;
 
 import com.shopme.common.entity.User;
 
-public class UserCSVExporter {
+public class UserCSVExporter extends AbstractExporter {
 	public void export(List<User> listUsers, HttpServletResponse httpServletResponse) throws IOException {
-		DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-		String timestamp=dateFormat.format(new Date());
-		String fileName="users_"+ timestamp+ ".csv";
-		httpServletResponse.setContentType("text/csv");
-		String headerKey="Content-Disposition";
-		String headerValue="attachment;filename="+fileName;
-		httpServletResponse.setHeader(headerKey, headerValue);
+		super.setResponseHeader(httpServletResponse, "text/csv", ".csv");
 		ICsvBeanWriter csvWriter=new CsvBeanWriter(httpServletResponse.getWriter(),CsvPreference.STANDARD_PREFERENCE);
 		String[] csvHeader= {"User_id","Email","First Name","Last Name","Roles","Enabled"};
 		String[] fieldMapping= {"id","email","firstName","lastName","roles","enabled"};
