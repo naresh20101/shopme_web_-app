@@ -3,6 +3,8 @@ package com.shopme.admin.user;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -89,10 +91,14 @@ public class UserController {
 			userService.save(user);
 		}
 	//	userService.save(user);
-		String firstPartOfEMail=user.getEmail().split("@")[0];
-	    redirectAttributes.addFlashAttribute("message","The user have been saved sucessfully");
-		return"redirect:/users/page/1?sortField=id&sortDir=asc&keyword="+firstPartOfEMail;
+		 redirectAttributes.addFlashAttribute("message","The user have been saved sucessfully");
+		return getRedirectURLToAffectedUser(user);
 		
+	}
+	private String getRedirectURLToAffectedUser(User user) {
+		String firstPartOfEMail=user.getEmail().split("@")[0];
+	   
+		return"redirect:/users/page/1?sortField=id&sortDir=asc&keyword="+firstPartOfEMail;
 	}
 	
 	@GetMapping("/users/edit/{id}")
@@ -136,6 +142,13 @@ public class UserController {
 		 return"redirect:/users";
 	}
 	
+	@GetMapping("/users/export/csv")
+	public void  exportToCSV(HttpServletResponse httpServletResponse) throws IOException {
+		List<User> listUsers=userService.listAll();
+		
+		UserCSVExporter exporter=new UserCSVExporter();
+		exporter.export(listUsers, httpServletResponse);
+	}
 	
 
 
